@@ -9,30 +9,35 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-jobs:
-- job: Job1
-  steps:
-  - script: echo Hello, world 1
-    displayName: 'Run a one-line script'
-  - script: |
-     echo Add other tasks to build, test, and deploy your project.
-     echo See https://aka.ms/yaml
-   
-- job: Job2
-  dependsOn: Job1
-  steps:
-  - script: echo Job2
-    displayName: 'Run a one-line script'
-- job: Job3
-  dependsOn: Job1
-  steps:
-  - script: echo Job3
-    displayName: 'Run a one-line script'
 
-- job: Job4
+stages:
+
+- stage: Appdeploy1
+  jobs:
+  - job: App1
+    steps:
+     - script: echo 'App1'
+       displayName: 'Deploy the App1'
+- stage: Appdeploy2
+  dependsOn: Appdeploy1
+  jobs:
+   - job: App2
+     steps:
+     - script: echo 'App2'
+       displayName: 'Deploy the App2'
+- stage: Appdeploy3
+  dependsOn: Appdeploy1
+  jobs:
+   - job: App3
+     steps:
+     - script: echo 'App3'
+       displayName: 'Deploy the App3'
+- stage: Appdeploy4
   dependsOn: 
-  - Job2
-  - Job3
-  steps:
-  - script: echo Job4
-    displayName: 'Run a one-line script'
+  - Appdeploy2
+  - Appdeploy3
+  jobs:
+   - job: App4
+     steps:
+     - script: echo 'App4'
+       displayName: 'Deploy the App4'
