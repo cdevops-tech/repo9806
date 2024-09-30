@@ -23,7 +23,7 @@ stages:
   jobs:
    - job: App2
      steps:
-     - script: echo 'App2'
+     - script: echo 'App2'$(platform)
        displayName: 'Deploy the App2'
 - stage: Appdeploy3
   dependsOn: Appdeploy1
